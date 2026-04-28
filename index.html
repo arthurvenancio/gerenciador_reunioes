@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeetingFlow Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container-main">
+        <div id="tela-login" class="glass-card  centralizado-meio" style="width: 25%;;">
+            <div style="display: flex;flex-direction: column;gap: 0.75rem;">
+                <h1 class="title-primary">Gerenciador de Reuniões</h1>
+                <div style="display: flex;align-items: center;gap: 0.75rem;">
+                    <label style="width: 20%;" for="cod-user"><b>Código de Usuário</b></label>
+                    <input type="number" id="cod-user" class="input-field" style="flex: 1;">
+                </div>    
+                <button id="login-btn" class="btn-base btn-indigo">Entrar</button>
+                <button id="novo-user-btn" class="btn-base btn-indigo-2">Novo Usuário</button>
+            </div>
+        </div>
+        <div id="tela-cadastro" class="glass-card centralizado-meio hidden" style="width: 25%;;">
+            <div style="display: flex;flex-direction: column;gap: 0.75rem;">
+                <h1 class="title-primary">Cadastro de Novo Usuário</h1>
+                <div style="display: flex;align-items: center;gap: 0.5rem;">
+                    <label style="width: 15%;" for="nome-usuario"><b>Nome</b></label>
+                    <input type="text" id="nome-usuario" class="input-field" style="flex: 1;">
+                </div> 
+                <div style="display: flex;align-items: center;gap: 0.5rem;">
+                    <label style="width: 15%;" for="cod-usuario"><b>Código Usuário</b></label>
+                    <input type="number" id="cod-usuario" class="input-field" style="flex: 1;">
+                </div>   
+                <button id="cadastro-btn" class="btn-base btn-indigo">Cadastrar</button>
+            </div>
+        </div>
+        <div id="tela-principal" class="hidden">
+            <!-- Cabeçalho -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="md:col-span-3 glass-card">
+                <h1 class="title-primary">Gerenciador de Reuniões - [<span id="display-nome-user">Nome</span>]</h1>
+                <p class="subtitle">Controle de tempo e gestão de pautas em tempo real.</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="label-caps">Tipo de Reunião</label>
+                        <select id="meeting-type" class="input-field">
+                            <option value="true">📅 Agendada</option>
+                            <option value="false">⚡ Não Agendada</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="label-caps">Participante(s)</label>
+                        <input type="text" id="participants-input" placeholder="Ex: Time de Produto" class="input-field">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cronômetro Principal -->
+            <div class="timer-card">
+                <span class="label-caps" style="color: rgba(255,255,255,0.8)">Duração Total</span>
+                <div id="total-timer" class="timer-display">00:00:00</div>
+                <div class="flex gap-3">
+                    <button id="main-btn" class="btn-timer-main">
+                        <i id="main-icon" class="fas fa-play"></i>
+                    </button>
+                    <button id="reset-btn" class="btn-timer-reset">
+                        <i class="fas fa-redo-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Seção de Pauta -->
+            <div class="lg:col-span-2">
+                <section class="glass-card">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold text-slate-800">Pauta Ativa</h2>
+                        <span id="topic-count" class="badge-count">0 tópicos</span>
+                    </div>
+                    <div class="flex gap-2 mb-6">
+                        <input type="text" id="topic-input" placeholder="Qual o próximo assunto?" class="input-field" style="flex: 1;">
+                        <button id="add-topic-btn" class="btn-base btn-indigo">Adicionar</button>
+                    </div>
+                    <div id="topics-list" style="max-height: 500px; overflow-y: auto;">
+                        <!-- Tópicos dinâmicos aqui -->
+                    </div>
+                </section>
+            </div>
+
+            <!-- Notas e Finalização -->
+            <div class="space-y-6">
+                <section class="glass-card">
+                    <h2 class="text-lg font-bold text-slate-800 mb-4">Ações da Reunião</h2>
+                    <div class="status-badge">
+                        <div class="label-caps" style="color: #4f46e5">Status do Timer</div>
+                        <div id="status-label" class="text-sm font-medium italic" style="color: #3730a3">Aguardando início...</div>
+                    </div>
+                    
+                    <button id="finish-btn" class="btn-base btn-dark">
+                        <i class="fas fa-check-double"></i> Finalizar Reunião
+                    </button>
+                </section>
+
+                <section class="glass-card">
+                    <h2 class="text-lg font-bold text-slate-800 mb-4">Notas & Decisões</h2>
+                    <textarea id="notes-area" rows="6" class="input-field" style="resize: none;" placeholder="Registre aqui as decisões importantes..."></textarea>
+                </section>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Notificação Flutuante -->
+    <div id="message-box" class="notification-toast">
+        Reunião finalizada e resumo copiado!
+    </div>
+
+    <script src="script_estilizacao.js"></script>
+    <script src="script_envio_reuniao.js"></script>
+    <script src="script_validacao_usuario.js"></script>
+</body>
+</html>
