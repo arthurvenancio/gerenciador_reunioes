@@ -7,7 +7,7 @@ function alternar_visibilidade(id) {
     }
 }
 
-document.getElementById("login-btn").onclick = () => {
+document.getElementById("login-btn").onclick = async () => {
     const cod_user = document.getElementById("cod-user").value
 
     if (cod_user) {
