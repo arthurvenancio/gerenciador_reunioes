@@ -14,7 +14,7 @@ document.getElementById("login-btn").onclick = async () => {
         try {
             const response = await fetch(`/api/getUser?cod_user=${cod_user}`)
             const data = await response.text()
-            console.log(data.nome)
+            console.log(data)
 
             if (response.ok) {
                 document.getElementById("display-nome-user").innerHTML = data.nome
